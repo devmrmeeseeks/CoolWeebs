@@ -13,11 +13,11 @@ builder.Services.AddDatabaseProvider(builder.Configuration);
 var app = builder.Build();
 
 // Init DB and apply pending migrations
-//using (IServiceScope scope = app.Services.CreateScope())
-//{
-//    BaseContext baseContext = scope.ServiceProvider.GetRequiredService<BaseContext>();
-//    baseContext.Database.Migrate();
-//}
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    BaseContext baseContext = scope.ServiceProvider.GetRequiredService<BaseContext>();
+    baseContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -8,7 +8,9 @@ namespace CoolWeebs.API.Database
         {
             services.AddDbContext<BaseContext>(options =>
             {
-                options.UseMySQL(configuration.GetConnectionString("DefaultConnection"));
+                string connectionString = configuration.GetConnectionString("DefaultConnection");
+                var serverVersion = new MariaDbServerVersion(new Version(10, 6));
+                options.UseMySql(connectionString, serverVersion);
             });
 
             return services;
