@@ -210,3 +210,4 @@ project.lock.json
 
 # UWP Projects
 AppPackages/
+CoolWeebs.API/appsettings.Development.json

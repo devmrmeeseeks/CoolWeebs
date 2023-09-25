@@ -13,7 +13,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\" />
+    <Folder Include="Modules\Authorization\" />
+    <Folder Include="Modules\List\Entities\" />
+    <Folder Include="Modules\List\Controllers\" />
+    <Folder Include="Modules\List\Repositories\" />
+    <Folder Include="Modules\List\Services\" />
+    <Folder Include="Modules\Notification\" />
   </ItemGroup>
 
 </Project>
