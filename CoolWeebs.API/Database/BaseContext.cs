@@ -1,12 +1,13 @@
-﻿using CoolWeebs.API.Modules.List.Entities;
+﻿using CoolWeebs.API.Modules.TitleList.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoolWeebs.API.Database
 {
     public class BaseContext : DbContext
     {
-        public DbSet<TitleListEntity> TitleLists => Set<TitleListEntity>(); 
-        public DbSet<ItemEntity> Items => Set<ItemEntity>();
+        public DbSet<ListEntity> Lists { get; set; } = null!; 
+        public DbSet<ItemEntity> Items { get; set; } = null!;
+        public DbSet<TitleEntity> Titles { get; set; } = null!;
 
         public BaseContext(DbContextOptions<BaseContext> options) : base(options)
         {

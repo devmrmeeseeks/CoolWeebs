@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CoolWeebs.API.Modules.List.Entities
+namespace CoolWeebs.API.Modules.TitleList.Entities
 {
-    [Table(name: "tb_tl_item")]
+    [Table(name: "tb_tl_list")]
     [Index(nameof(Id), nameof(Title), nameof(CreatedAt))]
-    public class ItemEntity : AuditEntity
+    public class ListEntity : AuditEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -17,20 +17,16 @@ namespace CoolWeebs.API.Modules.List.Entities
         [Required]
         [MaxLength(100)]
         [Column(name: "title")]
-        public string? Title { get; set; } = null!;
+        public string Title { get; set; } = null!;
 
         [MaxLength(200)]
         [Column(name: "url_thumbnail")]
         public string? UrlThumbnail { get; set; }
 
-        [Column(name: "is_completed")]
-        public bool IsCompleted { get; set; }
+        [MaxLength(500)]
+        [Column(name: "description")]
+        public string? Description { get; set; }
 
-        [Required]
-        [Column(name: "tl_list_id")]
-        [ForeignKey(name: "tl_list_id")]
-        public long TitleListId { get; set; }
-
-        public virtual TitleListEntity? TitleList { get; set; }
+        public virtual ICollection<ItemEntity>? Items { get; set; }
     }
 }

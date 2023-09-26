@@ -16,10 +16,10 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.22")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("CoolWeebs.API.Modules.List.Entities.ItemEntity", b =>
+            modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ItemEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,35 +42,30 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasColumnType("tinyint(1)")
                         .HasColumnName("is_deleted");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
-                        .HasColumnName("title");
-
-                    b.Property<long>("TitleListId")
+                    b.Property<long>("ListId")
                         .HasColumnType("bigint")
                         .HasColumnName("tl_list_id");
+
+                    b.Property<long?>("TitleId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("tl_title_id");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
-                    b.Property<string>("UrlThumbnail")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
-                        .HasColumnName("url_thumbnail");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("TitleListId");
+                    b.HasIndex("ListId");
 
-                    b.HasIndex("Id", "Title", "CreatedAt");
+                    b.HasIndex("TitleId");
+
+                    b.HasIndex("Id", "TitleId", "ListId", "CreatedAt");
 
                     b.ToTable("tb_tl_item");
                 });
 
-            modelBuilder.Entity("CoolWeebs.API.Modules.List.Entities.TitleListEntity", b =>
+            modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,18 +111,67 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                     b.ToTable("tb_tl_list");
                 });
 
-            modelBuilder.Entity("CoolWeebs.API.Modules.List.Entities.ItemEntity", b =>
+            modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.TitleEntity", b =>
                 {
-                    b.HasOne("CoolWeebs.API.Modules.List.Entities.TitleListEntity", "TitleList")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext")
+                        .HasColumnName("description");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("is_deleted");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)")
+                        .HasColumnName("title");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
+
+                    b.Property<string>("UrlThumbnail")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)")
+                        .HasColumnName("url_thumbnail");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tb_tl_title");
+                });
+
+            modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ItemEntity", b =>
+                {
+                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", "List")
                         .WithMany("Items")
-                        .HasForeignKey("TitleListId")
+                        .HasForeignKey("ListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("TitleList");
+                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.TitleEntity", "Title")
+                        .WithMany()
+                        .HasForeignKey("TitleId");
+
+                    b.Navigation("List");
+
+                    b.Navigation("Title");
                 });
 
-            modelBuilder.Entity("CoolWeebs.API.Modules.List.Entities.TitleListEntity", b =>
+            modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", b =>
                 {
                     b.Navigation("Items");
                 });

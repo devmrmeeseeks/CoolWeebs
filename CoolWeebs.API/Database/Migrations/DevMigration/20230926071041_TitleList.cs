@@ -37,7 +37,7 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "tb_tl_item",
+                name: "tb_tl_title",
                 columns: table => new
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
@@ -46,7 +46,27 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     url_thumbnail = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    is_deleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    deleted_at = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tb_tl_title", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "tb_tl_item",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     is_completed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    tl_title_id = table.Column<long>(type: "bigint", nullable: true),
                     tl_list_id = table.Column<long>(type: "bigint", nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: true),
@@ -62,18 +82,28 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         principalTable: "tb_tl_list",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_tb_tl_item_tb_tl_title_tl_title_id",
+                        column: x => x.tl_title_id,
+                        principalTable: "tb_tl_title",
+                        principalColumn: "id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_tl_item_id_title_created_at",
+                name: "IX_tb_tl_item_id_tl_title_id_tl_list_id_created_at",
                 table: "tb_tl_item",
-                columns: new[] { "id", "title", "created_at" });
+                columns: new[] { "id", "tl_title_id", "tl_list_id", "created_at" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_tl_item_tl_list_id",
                 table: "tb_tl_item",
                 column: "tl_list_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_tb_tl_item_tl_title_id",
+                table: "tb_tl_item",
+                column: "tl_title_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_tl_list_id_title_created_at",
@@ -88,6 +118,9 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
             migrationBuilder.DropTable(
                 name: "tb_tl_list");
+
+            migrationBuilder.DropTable(
+                name: "tb_tl_title");
         }
     }
 }
