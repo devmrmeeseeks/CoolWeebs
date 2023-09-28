@@ -1,8 +1,9 @@
-﻿using CoolWeebs.API.Modules.TitleList.Entities;
+﻿using CoolWeebs.API.Common.Repository;
+using CoolWeebs.API.Modules.TitleList.Entities;
 
 namespace CoolWeebs.API.Modules.TitleList.Repositories
 {
-    public interface IListRepository
+    public interface IListRepository : IBaseRepository<ListEntity, long>
     {
     }
 }

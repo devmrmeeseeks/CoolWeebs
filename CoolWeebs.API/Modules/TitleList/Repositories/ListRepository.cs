@@ -4,10 +4,10 @@ using CoolWeebs.API.Modules.TitleList.Entities;
 
 namespace CoolWeebs.API.Modules.TitleList.Repositories
 {
-    public class TitleRepository : BaseRepository<TitleEntity, long>, ITitleRepository
+    public class ListRepository : BaseRepository<ListEntity, long>, IListRepository
     {
-        public TitleRepository(BaseContext context) : base(context)
+        public ListRepository(BaseContext context) : base(context)
         {
-        }
+        }   
     }
 }

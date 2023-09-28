@@ -1,11 +1,11 @@
-﻿using CoolWeebs.API.Database;
+﻿using CoolWeebs.API.Common.Repository;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoolWeebs.API.Modules.TitleList.Entities
 {
     [Table(name: "tb_tl_title")]
-    public class TitleEntity : AuditEntity
+    public class TitleEntity : AuditEntity, IEntity<long>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,7 +15,7 @@ namespace CoolWeebs.API.Modules.TitleList.Entities
         [Required]
         [MaxLength(100)]
         [Column(name: "title")]
-        public string? Title { get; set; }
+        public string Title { get; set; } = null!;
 
         [MaxLength(200)]
         [Column(name: "url_thumbnail")]

@@ -1,4 +1,6 @@
+using CoolWeebs.API.Configurations;
 using CoolWeebs.API.Database;
+using CoolWeebs.API.Providers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Add services to the container API.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDatabaseProvider(builder.Configuration);
+builder.Services.AddCoolWeebsApi(builder.Configuration);
 
 var app = builder.Build();
 

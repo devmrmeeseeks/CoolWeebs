@@ -5,7 +5,7 @@ namespace CoolWeebs.API.Database
 {
     public class BaseContext : DbContext
     {
-        public DbSet<ListEntity> Lists { get; set; } = null!; 
+        public DbSet<ListEntity> Lists { get; set; } = null!;
         public DbSet<ItemEntity> Items { get; set; } = null!;
         public DbSet<TitleEntity> Titles { get; set; } = null!;
 

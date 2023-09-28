@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolWeebs.API.Database.Migrations.DevMigration
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20230926071041_TitleList")]
+    [Migration("20230928032721_TitleList")]
     partial class TitleList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

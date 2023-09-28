@@ -1,4 +1,4 @@
-﻿using CoolWeebs.API.Database;
+﻿using CoolWeebs.API.Common.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ namespace CoolWeebs.API.Modules.TitleList.Entities
 {
     [Table(name: "tb_tl_item")]
     [Index(nameof(Id), nameof(TitleId), nameof(ListId), nameof(CreatedAt))]
-    public class ItemEntity : AuditEntity
+    public class ItemEntity : AuditEntity, IEntity<long>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
