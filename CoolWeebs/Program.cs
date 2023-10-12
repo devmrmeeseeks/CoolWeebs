@@ -1,3 +1,4 @@
+using CoolWeebs.API.Common.Middlewares;
 using CoolWeebs.API.Configurations;
 using CoolWeebs.API.Database;
 using CoolWeebs.API.Providers;
@@ -34,6 +35,9 @@ using (IServiceScope scope = app.Services.CreateScope())
     BaseContext baseContext = scope.ServiceProvider.GetRequiredService<BaseContext>();
     baseContext.Database.Migrate();
 }
+
+// Middlewares
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 app.UseStaticFiles();
 

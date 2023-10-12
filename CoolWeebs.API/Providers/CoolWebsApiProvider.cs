@@ -1,4 +1,5 @@
-﻿using CoolWeebs.API.Configurations;
+﻿using CoolWeebs.API.Common.Middlewares;
+using CoolWeebs.API.Configurations;
 using CoolWeebs.API.Modules.TitleList.Providers;
 
 namespace CoolWeebs.API.Providers
@@ -15,6 +16,8 @@ namespace CoolWeebs.API.Providers
             services.AddAutoMapperProvider();
 
             services.AddTitleListModule();
+
+            services.AddTransient<GlobalExceptionMiddleware>();
 
             return services;
         }

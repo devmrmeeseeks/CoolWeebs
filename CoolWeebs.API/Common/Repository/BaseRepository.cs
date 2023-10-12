@@ -37,7 +37,7 @@ namespace CoolWeebs.API.Common.Repository
 
         public async Task<E?> GetByIdAsync(T id, CancellationToken cancellationToken)
         {
-            return await _context.Set<E>().SingleOrDefaultAsync(id => id.Equals(id), cancellationToken);
+            return await _context.Set<E>().SingleOrDefaultAsync(entity => entity.Id!.Equals(id), cancellationToken);
         }
 
         public async Task<E> UpdateAsync(E entity, CancellationToken cancellationToken)

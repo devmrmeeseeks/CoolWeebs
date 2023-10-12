@@ -6,6 +6,7 @@
         {
             services.AddRepositories();
             services.AddServices();
+            services.AddValidators();
 
             return services;
         }
