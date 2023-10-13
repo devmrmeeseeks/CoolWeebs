@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace CoolWebs.Model.TitleLIst
 {
-    public class TitleResponse
-    {
-        public string Title { get; set; } = null!;
+    public record TitleResponse
+    (
+        string Title,
 
-        public string? UrlThumbnail { get; set; }
+        string? UrlThumbnail,
 
-        public string? Description { get; set; }
+        string? Description,
 
-        public DateTime CreatedAt { get; set; }
+        DateTime CreatedAt,
 
-        public DateTime? UpdatedAt { get; set; }
-    }
+        DateTime? UpdatedAt
+    );
 }

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using CoolWeebs.API.Common.Exceptions;
+using FluentValidation;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -7,33 +8,24 @@ namespace CoolWeebs.API.Common.Extensions
 {
     public static class ControllerExtensions
     {
-        public static IActionResult ToResponse<TResult>(this Result<TResult> result, HttpStatusCode statusType)
+        public static IActionResult ToResponse<TResult>(this ControllerBase controller, Result<TResult> result)
         {
+            var actionName = controller.RouteData.Values["action"]?.ToString();
+            var controllerName = controller.RouteData.Values["controller"]?.ToString();
+            var uri = controller.Url.Action(actionName, controllerName);
+
             return result.Match<IActionResult>(
-                success =>
+                success => actionName switch
                 {
-                    if (statusType == HttpStatusCode.Created)
-                    {
-                        return new CreatedAtActionResult("", "", "", success);
-                    } else if (statusType == HttpStatusCode.OK)
-                    {
-                        return new OkObjectResult(success);
-                    }
-                    else
-                    {
-                        return new StatusCodeResult(500);
-                    }
+                    "Post" => controller.Created(uri!, success),
+                    "Get" or "Patch" => controller.Ok(success),
+                    _ => controller.StatusCode(500)
                 },
-                failure =>
+                failure => failure switch
                 {
-                    if (failure is ValidationException validationException)
-                    {
-                        return new BadRequestObjectResult(validationException.ToProblemDetails());
-                    }
-                    else
-                    {
-                        return new StatusCodeResult(500);
-                    }
+                    ValidationException validationException => controller.BadRequest(validationException.ToProblemDetails()),
+                    ConflictException conflictException => controller.Conflict(conflictException.ToProblemDetails()),
+                    _ => controller.StatusCode(500)
                 });
         }
     }

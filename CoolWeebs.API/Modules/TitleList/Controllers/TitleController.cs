@@ -23,20 +23,21 @@ namespace CoolWeebs.API.Modules.TitleList.Controllers
         public async Task<IActionResult> PostAsync(TitleRequest request, CancellationToken cancellationToken)
         {
             Result<TitleResponse> result = await _titleService.CreateAsync(request, cancellationToken);
-            return result.ToResponse(HttpStatusCode.Created);
+            return this.ToResponse(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(long id, CancellationToken cancellationToken)
         {
             Result<TitleResponse> result = await _titleService.GetByIdAsync(id, cancellationToken);
-            return result.ToResponse(HttpStatusCode.OK);
+            return this.ToResponse(result);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsync(long id, TitleRequest request, CancellationToken cancellationToken) {
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PatchAsync(long id, TitleRequest request, CancellationToken cancellationToken)
+        {
             Result<TitleResponse> result = await _titleService.UpdateAsync(id, request, cancellationToken);
-            return result.ToResponse(HttpStatusCode.OK);
+            return this.ToResponse(result);
         }
     }
 }

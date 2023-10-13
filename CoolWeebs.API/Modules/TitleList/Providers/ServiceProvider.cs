@@ -6,7 +6,7 @@ namespace CoolWeebs.API.Modules.TitleList.Providers
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
-            services.AddTransient<ITitleService, TitleService>();
+            services.AddScoped<ITitleService, TitleService>();
 
             return services;
         }

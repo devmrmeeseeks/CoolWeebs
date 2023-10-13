@@ -21,24 +21,16 @@ namespace CoolWeebs.API.Common.Repository
         }
 
         public async Task<IEnumerable<E>> GetAllByAsync(Expression<Func<E, bool>> predicate, CancellationToken cancellationToken)
-        {
-            return await _context.Set<E>().Where(predicate).ToListAsync(cancellationToken);
-        }
+            => await _context.Set<E>().Where(predicate).ToListAsync(cancellationToken);
 
         public async Task<IEnumerable<E>> GetAllAsync(CancellationToken cancellationToken)
-        {
-            return await _context.Set<E>().ToListAsync(cancellationToken);
-        }
+            => await _context.Set<E>().ToListAsync(cancellationToken);
 
         public async Task<E?> GetByAsync(Expression<Func<E, bool>> predicate, CancellationToken cancellationToken)
-        {
-            return await _context.Set<E>().SingleOrDefaultAsync(predicate, cancellationToken);
-        }
+            => await _context.Set<E>().SingleOrDefaultAsync(predicate, cancellationToken);
 
         public async Task<E?> GetByIdAsync(T id, CancellationToken cancellationToken)
-        {
-            return await _context.Set<E>().SingleOrDefaultAsync(entity => entity.Id!.Equals(id), cancellationToken);
-        }
+            => await _context.Set<E>().SingleOrDefaultAsync(entity => entity.Id!.Equals(id), cancellationToken);
 
         public async Task<E> UpdateAsync(E entity, CancellationToken cancellationToken)
         {

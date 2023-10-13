@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CoolWebs.Model.TitleLIst;
+using CoolWeebs.API.Common.Exceptions;
 using CoolWeebs.API.Modules.TitleList.Entities;
 using CoolWeebs.API.Modules.TitleList.Repositories;
 using FluentValidation;
@@ -31,7 +32,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             TitleEntity? entity = await _titleRepository.GetByAsync(s => s.Title.Equals(request.Title), cancellationToken);
             if (entity is not null)
             {
-                return new Result<TitleResponse>(new ValidationException("Title already exists"));
+                return new Result<TitleResponse>(new ConflictException("Title already exists"));
             }
 
             entity = _mapper.Map<TitleEntity>(request);
@@ -52,7 +53,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             TitleEntity? entity = await _titleRepository.GetByIdAsync(id, cancellationToken);
             if (entity is null)
             {
-                return new Result<TitleResponse>(new ValidationException("Title not found"));
+                return new Result<TitleResponse>(new ConflictException("Title not found"));
             }
 
             entity = _mapper.Map(request, entity);
@@ -68,7 +69,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             TitleEntity? entity = await _titleRepository.GetByIdAsync(id, cancellationToken);
             if (entity is null)
             {
-                return new Result<TitleResponse>(new ValidationException("Title not found"));
+                return new Result<TitleResponse>(new ConflictException("Title not found"));
             }
 
             return _mapper.Map<TitleResponse>(entity);

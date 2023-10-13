@@ -24,8 +24,8 @@ namespace CoolWeebs.API.Common.Middlewares
 
                 ProblemDetails problem = new()
                 {
-                    Status = (int)HttpStatusCode.InternalServerError,
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Status = (int)HttpStatusCode.InternalServerError,
                     Title = "Server error",
                     Detail = "An internal server error occurred while processing the request.",
                 };

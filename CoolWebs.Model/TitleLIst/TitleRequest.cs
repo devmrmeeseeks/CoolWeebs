@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CoolWebs.Model.TitleLIst
 {
-    public class TitleRequest
-    {
-        public string Title { get; set; } = null!;
-        public string? Description { get; set; }
-    }
+    public record TitleRequest
+    (
+        string Title,
+        string? Description
+    );
 }
