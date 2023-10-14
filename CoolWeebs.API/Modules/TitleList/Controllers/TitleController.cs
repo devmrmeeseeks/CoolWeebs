@@ -33,6 +33,13 @@ namespace CoolWeebs.API.Modules.TitleList.Controllers
             return this.ToResponse(result);
         }
 
+        [HttpGet("search/{name}")]
+        public async Task<IActionResult> Get(string name, CancellationToken cancellationToken)
+        {
+            Result<IEnumerable<TitleResponse>> result = await _titleService.GetByNameAsync(name, cancellationToken);
+            return this.ToResponse(result);
+        }
+
         [HttpPatch("{id}")]
         public async Task<IActionResult> Patch(long id, TitleRequest request, CancellationToken cancellationToken)
         {

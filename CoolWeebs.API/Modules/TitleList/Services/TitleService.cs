@@ -80,6 +80,16 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             return _mapper.Map<TitleResponse>(entity);
         }
 
+        public async Task<Result<IEnumerable<TitleResponse>>> GetByNameAsync(string name, CancellationToken cancellationToken)
+        {
+            IEnumerable<TitleEntity> entities = await _titleRepository.GetAllByAsync(
+                s => s.Name.ToLower().Contains(name), cancellationToken);
+
+            IEnumerable<TitleResponse> result = _mapper.Map<IEnumerable<TitleResponse>>(entities);
+
+            return new Result<IEnumerable<TitleResponse>>(result);
+        }
+
         public async Task<Result<bool>> DeleteAsync(long id, CancellationToken cancellationToken)
         {
             TitleEntity? entity = await _titleRepository.GetByAsync(
