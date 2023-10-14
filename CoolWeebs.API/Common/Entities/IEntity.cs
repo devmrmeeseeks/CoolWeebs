@@ -1,4 +1,4 @@
-﻿namespace CoolWeebs.API.Common.Repository
+﻿namespace CoolWeebs.API.Common.Entities
 {
     public interface IEntity<T>
     {

@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Database\Migrations\" />
     <Folder Include="Modules\Authorization\" />
     <Folder Include="Modules\Notification\" />
   </ItemGroup>

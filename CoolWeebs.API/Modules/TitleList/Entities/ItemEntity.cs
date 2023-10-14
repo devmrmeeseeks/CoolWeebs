@@ -1,28 +1,18 @@
-﻿using CoolWeebs.API.Common.Repository;
+﻿using CoolWeebs.API.Common.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoolWeebs.API.Modules.TitleList.Entities
 {
-    [Table(name: "tb_tl_item")]
-    [Index(nameof(Id), nameof(TitleId), nameof(ListId), nameof(CreatedAt))]
     public class ItemEntity : AuditEntity, IEntity<long>
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column(name: "id")]
         public long Id { get; set; }
 
-        [Column(name: "is_completed")]
         public bool IsCompleted { get; set; }
 
-        [Column(name: "tl_title_id")]
-        [ForeignKey(name: "tl_title_id")]
         public long? TitleId { get; set; }
 
-        [Column(name: "tl_list_id")]
-        [ForeignKey(name: "tl_list_id")]
         public long ListId { get; set; }
 
         public virtual ListEntity? List { get; set; }

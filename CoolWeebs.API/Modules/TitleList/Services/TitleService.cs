@@ -29,7 +29,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
                 return new Result<TitleResponse>(new ValidationException(validationResult.Errors));
             }
 
-            TitleEntity? entity = await _titleRepository.GetByAsync(s => s.Title.Equals(request.Title), cancellationToken);
+            TitleEntity? entity = await _titleRepository.GetByAsync(s => s.Name.Equals(request.Name), cancellationToken);
             if (entity is not null)
             {
                 return new Result<TitleResponse>(new ConflictException("Title already exists"));
@@ -57,7 +57,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             }
 
             entity = _mapper.Map(request, entity);
-            entity.UpdatedAt = DateTime.UtcNow;
+            //entity.UpdatedAt = DateTime.UtcNow;
 
             await _titleRepository.UpdateAsync(entity, cancellationToken);
 

@@ -12,5 +12,10 @@ namespace CoolWeebs.API.Database
         public BaseContext(DbContextOptions<BaseContext> options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BaseContext).Assembly);
+        }
     }
 }

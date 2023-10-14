@@ -8,7 +8,7 @@ namespace CoolWebs.Model.TitleLIst
 {
     public record TitleRequest
     (
-        string Title,
+        string Name,
         string? Description
     );
 }

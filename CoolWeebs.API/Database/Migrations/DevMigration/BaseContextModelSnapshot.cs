@@ -27,42 +27,48 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("deleted_at");
-
                     b.Property<bool>("IsCompleted")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
                         .HasColumnName("is_completed");
 
                     b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
                         .HasColumnName("is_deleted");
 
                     b.Property<long>("ListId")
                         .HasColumnType("bigint")
-                        .HasColumnName("tl_list_id");
+                        .HasColumnName("list_id");
 
                     b.Property<long?>("TitleId")
+                        .IsRequired()
                         .HasColumnType("bigint")
-                        .HasColumnName("tl_title_id");
+                        .HasColumnName("title_id");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ListId");
-
                     b.HasIndex("TitleId");
 
-                    b.HasIndex("Id", "TitleId", "ListId", "CreatedAt");
+                    b.HasIndex("ListId", "TitleId")
+                        .IsUnique();
 
-                    b.ToTable("tb_tl_item");
+                    b.HasIndex("Id", "TitleId", "ListId");
+
+                    b.HasIndex("IsDeleted", "CreatedAt", "UpdatedAt");
+
+                    b.ToTable("tb_tl_item", (string)null);
                 });
 
             modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", b =>
@@ -73,29 +79,28 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("deleted_at");
-
                     b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("varchar(500)")
+                        .HasColumnType("longtext")
                         .HasColumnName("description");
 
                     b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
                         .HasColumnName("is_deleted");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("title");
+                        .HasColumnName("name");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
@@ -106,9 +111,9 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id", "Title", "CreatedAt");
+                    b.HasIndex("IsDeleted", "CreatedAt", "UpdatedAt");
 
-                    b.ToTable("tb_tl_list");
+                    b.ToTable("tb_tl_list", (string)null);
                 });
 
             modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.TitleEntity", b =>
@@ -119,28 +124,28 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasColumnName("id");
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime(6)")
-                        .HasColumnName("deleted_at");
 
                     b.Property<string>("Description")
                         .HasColumnType("longtext")
                         .HasColumnName("description");
 
                     b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(false)
                         .HasColumnName("is_deleted");
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)")
-                        .HasColumnName("title");
+                        .HasColumnName("name");
 
-                    b.Property<DateTime?>("UpdatedAt")
+                    b.Property<DateTime>("UpdatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
@@ -151,7 +156,14 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.HasKey("Id");
 
-                    b.ToTable("tb_tl_title");
+                    b.HasIndex("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.HasIndex("IsDeleted", "CreatedAt", "UpdatedAt");
+
+                    b.ToTable("tb_tl_title", (string)null);
                 });
 
             modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ItemEntity", b =>
@@ -164,7 +176,9 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.TitleEntity", "Title")
                         .WithMany()
-                        .HasForeignKey("TitleId");
+                        .HasForeignKey("TitleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("List");
 

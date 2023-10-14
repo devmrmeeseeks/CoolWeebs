@@ -1,4 +1,5 @@
-﻿using CoolWeebs.API.Database;
+﻿using CoolWeebs.API.Common.Entities;
+using CoolWeebs.API.Database;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

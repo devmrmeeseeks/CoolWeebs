@@ -8,7 +8,7 @@ namespace CoolWebs.Model.TitleLIst
 {
     public record TitleResponse
     (
-        string Title,
+        string Name,
 
         string? UrlThumbnail,
 
