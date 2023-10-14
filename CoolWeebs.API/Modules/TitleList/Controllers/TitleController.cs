@@ -1,5 +1,5 @@
 ﻿using CoolWebs.Model.TitleLIst;
-using CoolWeebs.API.Common.Extensions;
+using CoolWeebs.API.Extensions;
 using CoolWeebs.API.Modules.TitleList.Services;
 using FluentValidation;
 using LanguageExt.Common;

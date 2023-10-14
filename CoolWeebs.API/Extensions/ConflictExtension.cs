@@ -1,8 +1,8 @@
-﻿using CoolWeebs.API.Common.Exceptions;
+﻿using CoolWeebs.API.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace CoolWeebs.API.Common.Extensions
+namespace CoolWeebs.API.Extensions
 {
     public static class ConflictExtension
     {

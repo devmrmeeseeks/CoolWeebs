@@ -1,7 +1,6 @@
-﻿using CoolWeebs.API.Database;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace CoolWeebs.API.Configurations
+namespace CoolWeebs.API.Database
 {
     public static class DatabaseProvider
     {

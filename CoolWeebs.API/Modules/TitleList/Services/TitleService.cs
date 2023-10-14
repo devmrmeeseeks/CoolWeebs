@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CoolWebs.Model.TitleLIst;
-using CoolWeebs.API.Common.Exceptions;
+using CoolWeebs.API.Exceptions;
 using CoolWeebs.API.Modules.TitleList.Entities;
 using CoolWeebs.API.Modules.TitleList.Repositories;
 using FluentValidation;
@@ -57,7 +57,6 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             }
 
             entity = _mapper.Map(request, entity);
-            //entity.UpdatedAt = DateTime.UtcNow;
 
             await _titleRepository.UpdateAsync(entity, cancellationToken);
 

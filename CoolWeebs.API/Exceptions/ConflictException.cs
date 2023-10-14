@@ -1,4 +1,4 @@
-﻿namespace CoolWeebs.API.Common.Exceptions
+﻿namespace CoolWeebs.API.Exceptions
 {
     public class ConflictException : Exception
     {

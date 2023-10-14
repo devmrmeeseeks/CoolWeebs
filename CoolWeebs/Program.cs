@@ -1,7 +1,6 @@
-using CoolWeebs.API.Common.Middlewares;
-using CoolWeebs.API.Configurations;
+using CoolWeebs.API;
 using CoolWeebs.API.Database;
-using CoolWeebs.API.Providers;
+using CoolWeebs.API.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

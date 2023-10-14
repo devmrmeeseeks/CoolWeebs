@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace CoolWeebs.API.Common.Extensions
+namespace CoolWeebs.API.Extensions
 {
     public static class BadRequestExtension
     {

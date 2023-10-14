@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CoolWeebs.API.Common.Entities
+namespace CoolWeebs.API.Entity
 {
     public class AuditEntity
     {

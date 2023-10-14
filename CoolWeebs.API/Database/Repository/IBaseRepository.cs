@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
-using CoolWeebs.API.Common.Entities;
+using CoolWeebs.API.Entity;
 
-namespace CoolWeebs.API.Common.Repository
+namespace CoolWeebs.API.Database.Repository
 {
     public interface IBaseRepository<E, T> where E : IEntity<T>
     {

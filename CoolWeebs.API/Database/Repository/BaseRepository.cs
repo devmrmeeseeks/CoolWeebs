@@ -1,9 +1,8 @@
-﻿using CoolWeebs.API.Common.Entities;
-using CoolWeebs.API.Database;
+﻿using CoolWeebs.API.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace CoolWeebs.API.Common.Repository
+namespace CoolWeebs.API.Database.Repository
 {
     public class BaseRepository<E, T> : IBaseRepository<E, T> where E : class, IEntity<T>
     {

@@ -1,8 +1,8 @@
-﻿using CoolWeebs.API.Common.Entities;
+﻿using CoolWeebs.API.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CoolWeebs.API.Common.Extensions
+namespace CoolWeebs.API.Extensions
 {
     public static class EntityTypeBuilderExtensions
     {

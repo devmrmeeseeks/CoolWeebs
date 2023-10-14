@@ -1,4 +1,4 @@
-﻿using CoolWeebs.API.Common.Entities;
+﻿using CoolWeebs.API.Entity;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;

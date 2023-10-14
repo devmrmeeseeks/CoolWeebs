@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace CoolWeebs.API.Common.Middlewares
+namespace CoolWeebs.API.Middlewares
 {
     public class GlobalExceptionMiddleware : IMiddleware
     {

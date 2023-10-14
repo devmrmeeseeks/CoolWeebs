@@ -1,4 +1,4 @@
-﻿namespace CoolWeebs.API.Common.Entities
+﻿namespace CoolWeebs.API.Entity
 {
     public interface IEntity<T>
     {

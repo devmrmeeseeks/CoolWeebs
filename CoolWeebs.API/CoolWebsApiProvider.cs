@@ -1,8 +1,8 @@
-﻿using CoolWeebs.API.Common.Middlewares;
-using CoolWeebs.API.Configurations;
+﻿using CoolWeebs.API.Database;
+using CoolWeebs.API.Middlewares;
 using CoolWeebs.API.Modules.TitleList.Providers;
 
-namespace CoolWeebs.API.Providers
+namespace CoolWeebs.API
 {
     public static class CoolWebsApiProvider
     {
@@ -13,11 +13,11 @@ namespace CoolWeebs.API.Providers
 
             services.AddDatabaseProvider(configuration);
 
-            services.AddAutoMapperProvider();
-
             services.AddTitleListModule();
 
             services.AddTransient<GlobalExceptionMiddleware>();
+
+            services.AddAutoMapper(typeof(CoolWebsApiProvider));
 
             return services;
         }

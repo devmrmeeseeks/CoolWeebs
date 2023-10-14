@@ -1,4 +1,4 @@
-﻿using CoolWeebs.API.Common.Extensions;
+﻿using CoolWeebs.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -27,7 +27,6 @@ namespace CoolWeebs.API.Modules.TitleList.Entities.Configurations
 
             builder.Property(e => e.Description)
                 .HasColumnName("description");
-
 
             builder.ConfigureCommonProperties();
         }

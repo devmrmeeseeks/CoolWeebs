@@ -2,7 +2,7 @@
 
 namespace CoolWeebs.API.Modules.TitleList.Providers
 {
-    public static partial class RepositoryProvider
+    public static class TitleListRepositoryProvider
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {

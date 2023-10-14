@@ -1,4 +1,4 @@
-﻿using CoolWeebs.API.Common.Extensions;
+﻿using CoolWeebs.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

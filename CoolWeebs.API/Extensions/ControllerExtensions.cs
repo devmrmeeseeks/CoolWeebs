@@ -1,10 +1,10 @@
-﻿using CoolWeebs.API.Common.Exceptions;
+﻿using CoolWeebs.API.Exceptions;
 using FluentValidation;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace CoolWeebs.API.Common.Extensions
+namespace CoolWeebs.API.Extensions
 {
     public static class ControllerExtensions
     {

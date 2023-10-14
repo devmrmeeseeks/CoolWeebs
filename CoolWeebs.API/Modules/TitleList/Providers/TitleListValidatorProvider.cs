@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace CoolWeebs.API.Modules.TitleList.Providers
 {
-    public static partial class ValidatorProvider
+    public static class TitleListValidatorProvider
     {
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
