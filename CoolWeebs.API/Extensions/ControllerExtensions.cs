@@ -2,7 +2,6 @@
 using FluentValidation;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace CoolWeebs.API.Extensions
 {

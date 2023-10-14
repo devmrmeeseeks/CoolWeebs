@@ -1,14 +1,14 @@
 ﻿using CoolWebs.Model.TitleLIst;
 using CoolWeebs.API.Extensions;
+using CoolWeebs.API.Filters;
 using CoolWeebs.API.Modules.TitleList.Services;
-using FluentValidation;
 using LanguageExt.Common;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace CoolWeebs.API.Modules.TitleList.Controllers
 {
     [ApiController]
+    [TrimStringProperties]
     [Route("api/[controller]")]
     public class TitleController : ControllerBase
     {
