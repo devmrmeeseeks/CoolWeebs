@@ -28,8 +28,7 @@ namespace CoolWeebs.API.Modules.TitleList.Entities.Configurations
             builder.Property(e => e.Description)
                 .HasColumnName("description");
 
-            builder.HasIndex(e => e.Id);
-            builder.HasIndex(e => e.Name).IsUnique();
+            builder.HasIndex(e => new { e.Id, e.Name });
 
             builder.ConfigureCommonProperties();
         }

@@ -29,7 +29,9 @@ namespace CoolWeebs.API.Modules.TitleList.Services
                 return new Result<TitleResponse>(new ValidationException(validationResult.Errors));
             }
 
-            TitleEntity? entity = await _titleRepository.GetByAsync(s => s.Name.Equals(request.Name), cancellationToken);
+            TitleEntity? entity = await _titleRepository.GetByAsync(
+                s => s.Name.Equals(request.Name) && !s.IsDeleted, cancellationToken);
+
             if (entity is not null)
             {
                 return new Result<TitleResponse>(new ConflictException("Title already exists"));
@@ -42,7 +44,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             return _mapper.Map<TitleResponse>(entity);
         }
 
-        public async Task<Result<TitleResponse>> UpdateAsync(long id, TitleRequest request, CancellationToken cancellationToken)
+        public async Task<Result<TitleResponse>> UpdateAsync(long id,TitleRequest request, CancellationToken cancellationToken)
         {
             var validationResult = await _validator.ValidateAsync(request, cancellationToken);
             if (!validationResult.IsValid)
@@ -50,7 +52,9 @@ namespace CoolWeebs.API.Modules.TitleList.Services
                 return new Result<TitleResponse>(new ValidationException(validationResult.Errors));
             }
 
-            TitleEntity? entity = await _titleRepository.GetByIdAsync(id, cancellationToken);
+            TitleEntity? entity = await _titleRepository.GetByAsync(
+                s => s.Id.Equals(id) && !s.IsDeleted, cancellationToken);
+
             if (entity is null)
             {
                 return new Result<TitleResponse>(new ConflictException("Title not found"));
@@ -65,13 +69,32 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
         public async Task<Result<TitleResponse>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
-            TitleEntity? entity = await _titleRepository.GetByIdAsync(id, cancellationToken);
+            TitleEntity? entity = await _titleRepository.GetByAsync(
+                s => s.Id.Equals(id) && !s.IsDeleted, cancellationToken);
+
             if (entity is null)
             {
                 return new Result<TitleResponse>(new ConflictException("Title not found"));
             }
 
             return _mapper.Map<TitleResponse>(entity);
+        }
+
+        public async Task<Result<bool>> DeleteAsync(long id, CancellationToken cancellationToken)
+        {
+            TitleEntity? entity = await _titleRepository.GetByAsync(
+                    s => s.Id.Equals(id) && !s.IsDeleted, cancellationToken);
+
+            if (entity is null)
+            {
+                return new Result<bool>(new ConflictException("Title not found"));
+            }
+
+            entity.IsDeleted = true;
+
+            await _titleRepository.UpdateAsync(entity, cancellationToken);
+
+            return true;
         }
     }
 }

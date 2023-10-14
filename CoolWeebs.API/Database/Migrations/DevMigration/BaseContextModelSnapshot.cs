@@ -111,6 +111,8 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id", "Name");
+
                     b.HasIndex("IsDeleted", "CreatedAt", "UpdatedAt");
 
                     b.ToTable("tb_tl_list", (string)null);
@@ -156,10 +158,7 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Id", "Name");
 
                     b.HasIndex("IsDeleted", "CreatedAt", "UpdatedAt");
 

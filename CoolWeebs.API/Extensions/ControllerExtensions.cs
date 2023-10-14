@@ -16,8 +16,9 @@ namespace CoolWeebs.API.Extensions
             return result.Match<IActionResult>(
                 success => actionName switch
                 {
-                    "Post" => controller.Created(uri!, success),
+                    "Post" => controller.Created(uri!, success),        
                     "Get" or "Patch" => controller.Ok(success),
+                    "Delete" => controller.NoContent(),
                     _ => controller.StatusCode(500)
                 },
                 failure => failure switch

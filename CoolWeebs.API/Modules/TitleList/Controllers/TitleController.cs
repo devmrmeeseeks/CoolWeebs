@@ -20,23 +20,30 @@ namespace CoolWeebs.API.Modules.TitleList.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAsync(TitleRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Post(TitleRequest request, CancellationToken cancellationToken)
         {
             Result<TitleResponse> result = await _titleService.CreateAsync(request, cancellationToken);
             return this.ToResponse(result);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync(long id, CancellationToken cancellationToken)
+        public async Task<IActionResult> Get(long id, CancellationToken cancellationToken)
         {
             Result<TitleResponse> result = await _titleService.GetByIdAsync(id, cancellationToken);
             return this.ToResponse(result);
         }
 
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PatchAsync(long id, TitleRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Patch(long id, TitleRequest request, CancellationToken cancellationToken)
         {
             Result<TitleResponse> result = await _titleService.UpdateAsync(id, request, cancellationToken);
+            return this.ToResponse(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(long id, CancellationToken cancellationToken)
+        {
+            Result<bool> result = await _titleService.DeleteAsync(id, cancellationToken);
             return this.ToResponse(result);
         }
     }

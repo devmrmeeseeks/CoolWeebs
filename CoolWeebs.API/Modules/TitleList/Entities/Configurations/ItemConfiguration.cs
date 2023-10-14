@@ -28,7 +28,6 @@ namespace CoolWeebs.API.Modules.TitleList.Entities.Configurations
                 .HasColumnName("is_completed")
                 .HasDefaultValue(false);
 
-
             builder.HasIndex(e => new { e.Id, e.TitleId, e.ListId });
             builder.HasIndex(e => new { e.ListId, e.TitleId }).IsUnique();
 

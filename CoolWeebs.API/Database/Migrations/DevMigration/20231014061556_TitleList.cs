@@ -116,25 +116,24 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                 column: "title_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_tb_tl_list_id_name",
+                table: "tb_tl_list",
+                columns: new[] { "id", "name" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_tb_tl_list_is_deleted_created_at_updated_at",
                 table: "tb_tl_list",
                 columns: new[] { "is_deleted", "created_at", "updated_at" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_tl_title_id",
+                name: "IX_tb_tl_title_id_name",
                 table: "tb_tl_title",
-                column: "id");
+                columns: new[] { "id", "name" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_tl_title_is_deleted_created_at_updated_at",
                 table: "tb_tl_title",
                 columns: new[] { "is_deleted", "created_at", "updated_at" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_tb_tl_title_name",
-                table: "tb_tl_title",
-                column: "name",
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

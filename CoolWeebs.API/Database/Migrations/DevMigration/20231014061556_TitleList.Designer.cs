@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolWeebs.API.Database.Migrations.DevMigration
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20231014024920_TitleList")]
+    [Migration("20231014061556_TitleList")]
     partial class TitleList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,6 +113,8 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Id", "Name");
+
                     b.HasIndex("IsDeleted", "CreatedAt", "UpdatedAt");
 
                     b.ToTable("tb_tl_list", (string)null);
@@ -158,10 +160,7 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
+                    b.HasIndex("Id", "Name");
 
                     b.HasIndex("IsDeleted", "CreatedAt", "UpdatedAt");
 
