@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolWeebs.API.Database.Migrations.DevMigration
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20231014061556_TitleList")]
+    [Migration("20231015215250_TitleList")]
     partial class TitleList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,12 +47,12 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.Property<long>("ListId")
                         .HasColumnType("bigint")
-                        .HasColumnName("list_id");
+                        .HasColumnName("tl_list_id");
 
                     b.Property<long?>("TitleId")
                         .IsRequired()
                         .HasColumnType("bigint")
-                        .HasColumnName("title_id");
+                        .HasColumnName("tl_title_id");
 
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
@@ -169,26 +169,19 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
             modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ItemEntity", b =>
                 {
-                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", "List")
-                        .WithMany("Items")
+                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", null)
+                        .WithMany()
                         .HasForeignKey("ListId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("tl_list_id");
 
-                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.TitleEntity", "Title")
+                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.TitleEntity", null)
                         .WithMany()
                         .HasForeignKey("TitleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("List");
-
-                    b.Navigation("Title");
-                });
-
-            modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", b =>
-                {
-                    b.Navigation("Items");
+                        .IsRequired()
+                        .HasConstraintName("tl_title_id");
                 });
 #pragma warning restore 612, 618
         }

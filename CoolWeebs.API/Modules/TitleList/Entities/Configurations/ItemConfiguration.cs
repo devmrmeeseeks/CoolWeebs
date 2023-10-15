@@ -17,11 +17,11 @@ namespace CoolWeebs.API.Modules.TitleList.Entities.Configurations
                 .IsRequired();
 
             builder.Property(e => e.TitleId)
-                .HasColumnName("title_id")
+                .HasColumnName("tl_title_id")
                 .IsRequired();
 
             builder.Property(e => e.ListId)
-                .HasColumnName("list_id")
+                .HasColumnName("tl_list_id")
                 .IsRequired();
 
             builder.Property(e => e.IsCompleted)
@@ -32,6 +32,16 @@ namespace CoolWeebs.API.Modules.TitleList.Entities.Configurations
             builder.HasIndex(e => new { e.ListId, e.TitleId }).IsUnique();
 
             builder.ConfigureCommonProperties();
+
+            builder.HasOne<TitleEntity>()
+                .WithMany()
+                .HasForeignKey(e => e.TitleId)
+                .HasConstraintName("tl_title_id");
+
+            builder.HasOne<ListEntity>()
+                .WithMany()
+                .HasForeignKey(e => e.ListId)
+                .HasConstraintName("tl_list_id");
         }
     }
 }

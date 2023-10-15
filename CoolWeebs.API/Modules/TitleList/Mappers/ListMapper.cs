@@ -12,6 +12,5 @@ namespace CoolWeebs.API.Modules.TitleList.Mappers
 
             CreateMap<ListEntity, ListResponse>();
         }
-
     }
 }

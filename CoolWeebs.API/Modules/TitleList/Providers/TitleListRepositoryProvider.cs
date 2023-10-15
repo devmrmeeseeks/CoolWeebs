@@ -8,6 +8,7 @@ namespace CoolWeebs.API.Modules.TitleList.Providers
         {
             services.AddScoped<ITitleRepository, TitleRepository>();
             services.AddScoped<IListRepository, ListRepository>();
+            services.AddScoped<IItemRepository, ItemRepository>();
 
             return services;
         }

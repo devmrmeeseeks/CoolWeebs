@@ -11,6 +11,6 @@
 
         DateTime CreatedAt,
 
-        DateTime? UpdatedAt
+        DateTime UpdatedAt
     );
 }

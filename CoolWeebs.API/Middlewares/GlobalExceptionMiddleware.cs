@@ -1,5 +1,4 @@
 ﻿using CoolWeebs.API.Extensions;
-using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace CoolWeebs.API.Middlewares
@@ -23,6 +22,7 @@ namespace CoolWeebs.API.Middlewares
             {
                 _logger.LogError(e, "An error occurred while processing the request.");
 
+                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 await context.Response.WriteAsJsonAsync(e.ToProblemDetails());
             }
         }

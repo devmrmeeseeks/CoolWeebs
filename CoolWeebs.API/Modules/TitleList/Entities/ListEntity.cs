@@ -11,7 +11,5 @@ namespace CoolWeebs.API.Modules.TitleList.Entities
         public string? UrlThumbnail { get; set; }
 
         public string? Description { get; set; }
-
-        public virtual ICollection<ItemEntity>? Items { get; set; }
     }
 }
