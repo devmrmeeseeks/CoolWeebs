@@ -25,7 +25,8 @@ namespace CoolWeebs.API.Extensions
                 {
                     ValidationException validationException => controller.BadRequest(validationException.ToProblemDetails()),
                     ConflictException conflictException => controller.Conflict(conflictException.ToProblemDetails()),
-                    _ => controller.StatusCode(500)
+                    NotFoundException notFoundException => controller.NotFound(notFoundException.ToProblemDetails()),
+                    _ => controller.StatusCode(500, failure.ToProblemDetails())
                 });
         }
     }

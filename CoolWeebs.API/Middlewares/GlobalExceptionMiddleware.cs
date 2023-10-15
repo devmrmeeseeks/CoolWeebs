@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CoolWeebs.API.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace CoolWeebs.API.Middlewares
@@ -22,16 +23,7 @@ namespace CoolWeebs.API.Middlewares
             {
                 _logger.LogError(e, "An error occurred while processing the request.");
 
-                ProblemDetails problem = new()
-                {
-                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-                    Status = (int)HttpStatusCode.InternalServerError,
-                    Title = "Server error",
-                    Detail = "An internal server error occurred while processing the request.",
-                };
-
-                context.Response.StatusCode = problem.Status.Value;
-                await context.Response.WriteAsJsonAsync(problem);
+                await context.Response.WriteAsJsonAsync(e.ToProblemDetails());
             }
         }
     }

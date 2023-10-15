@@ -15,12 +15,6 @@ namespace CoolWeebs.API.Extensions
                 Status = (int)HttpStatusCode.BadRequest,
             };
 
-            if (modelState.Errors.Count() == 0)
-            {
-                validationProblemDetails.Errors.Add("Error", new[] { modelState.Message });
-                return validationProblemDetails;
-            }
-
             foreach (var error in modelState.Errors)
             {
                 validationProblemDetails.Errors.Add(error.PropertyName, new[] { error.ErrorMessage });

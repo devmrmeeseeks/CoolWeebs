@@ -57,7 +57,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
             if (entity is null)
             {
-                return new Result<TitleResponse>(new ConflictException("Title not found"));
+                return new Result<TitleResponse>(new NotFoundException("Title not found"));
             }
 
             entity = _mapper.Map(request, entity);
@@ -74,7 +74,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
             if (entity is null)
             {
-                return new Result<TitleResponse>(new ConflictException("Title not found"));
+                return new Result<TitleResponse>(new NotFoundException("Title not found"));
             }
 
             return _mapper.Map<TitleResponse>(entity);
@@ -97,7 +97,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
             if (entity is null)
             {
-                return new Result<bool>(new ConflictException("Title not found"));
+                return new Result<bool>(new NotFoundException("Title not found"));
             }
 
             entity.IsDeleted = true;
