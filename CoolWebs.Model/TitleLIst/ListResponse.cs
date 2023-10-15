@@ -1,7 +1,6 @@
 ﻿namespace CoolWebs.Model.TitleLIst
 {
-    public record TitleResponse
-    (
+    public record ListResponse(
         long Id,
 
         string Name,

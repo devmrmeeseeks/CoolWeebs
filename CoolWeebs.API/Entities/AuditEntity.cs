@@ -1,8 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CoolWeebs.API.Entity
+﻿namespace CoolWeebs.API.Entities
 {
     public class AuditEntity
     {

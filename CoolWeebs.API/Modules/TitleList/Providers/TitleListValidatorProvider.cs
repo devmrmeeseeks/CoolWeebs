@@ -9,6 +9,7 @@ namespace CoolWeebs.API.Modules.TitleList.Providers
         public static IServiceCollection AddValidators(this IServiceCollection services)
         {
             services.AddScoped<IValidator<TitleRequest>, TitleValidator>();
+            services.AddScoped<IValidator<ListRequest>, ListValidator>();
 
             return services;
         }

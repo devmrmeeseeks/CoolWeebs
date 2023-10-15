@@ -1,7 +1,6 @@
 ﻿using CoolWeebs.API.Database;
 using CoolWeebs.API.Database.Repository;
 using CoolWeebs.API.Modules.TitleList.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace CoolWeebs.API.Modules.TitleList.Repositories
 {

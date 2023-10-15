@@ -4,6 +4,7 @@ using CoolWeebs.API.Exceptions;
 using CoolWeebs.API.Modules.TitleList.Entities;
 using CoolWeebs.API.Modules.TitleList.Repositories;
 using FluentValidation;
+using FluentValidation.Results;
 using LanguageExt.Common;
 
 namespace CoolWeebs.API.Modules.TitleList.Services
@@ -23,7 +24,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
         public async Task<Result<TitleResponse>> CreateAsync(TitleRequest request, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
             if (!validationResult.IsValid)
             {
                 return new Result<TitleResponse>(new ValidationException(validationResult.Errors));
@@ -46,7 +47,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
         public async Task<Result<TitleResponse>> UpdateAsync(long id,TitleRequest request, CancellationToken cancellationToken)
         {
-            var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+            ValidationResult validationResult = await _validator.ValidateAsync(request, cancellationToken);
             if (!validationResult.IsValid)
             {
                 return new Result<TitleResponse>(new ValidationException(validationResult.Errors));

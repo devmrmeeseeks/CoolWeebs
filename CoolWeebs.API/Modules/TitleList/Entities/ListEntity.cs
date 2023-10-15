@@ -1,7 +1,4 @@
-﻿using CoolWeebs.API.Entity;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using CoolWeebs.API.Entities;
 
 namespace CoolWeebs.API.Modules.TitleList.Entities
 {
