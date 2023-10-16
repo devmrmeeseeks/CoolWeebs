@@ -79,7 +79,9 @@ namespace CoolWeebs.API.Modules.TitleList.Services
         {
             foreach (long item in items)
             {
-                ItemEntity? entity = await _itemRepository.GetByIdAsync(item, cancellationToken);
+                ItemEntity? entity = await _itemRepository.GetByAsync(
+                    s => s.Id.Equals(item) && !s.IsDeleted, cancellationToken);
+
                 if (entity is null)
                 {
                     continue;
