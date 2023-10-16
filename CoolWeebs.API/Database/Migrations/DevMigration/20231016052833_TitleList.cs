@@ -80,13 +80,13 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                 {
                     table.PrimaryKey("PK_tb_tl_item", x => x.id);
                     table.ForeignKey(
-                        name: "tl_list_id",
+                        name: "FK_tb_tl_item_tb_tl_list_tl_list_id",
                         column: x => x.tl_list_id,
                         principalTable: "tb_tl_list",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "tl_title_id",
+                        name: "FK_tb_tl_item_tb_tl_title_tl_title_id",
                         column: x => x.tl_title_id,
                         principalTable: "tb_tl_title",
                         principalColumn: "id",
@@ -105,10 +105,9 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                 columns: new[] { "is_deleted", "created_at", "updated_at" });
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_tl_item_tl_list_id_tl_title_id",
+                name: "IX_tb_tl_item_tl_list_id",
                 table: "tb_tl_item",
-                columns: new[] { "tl_list_id", "tl_title_id" },
-                unique: true);
+                column: "tl_list_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_tb_tl_item_tl_title_id",

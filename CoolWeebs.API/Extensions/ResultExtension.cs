@@ -10,5 +10,12 @@ namespace CoolWeebs.API.Extensions
                 succ => succ,
                 fail => throw fail);
         }
+
+        public static Exception GetException<A>(this Result<A> result)
+        {
+            return result.Match(
+                _ => null!,
+                fail => fail);
+        }
     }
 }

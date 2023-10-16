@@ -39,7 +39,6 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             }
 
             entity = _mapper.Map<TitleEntity>(request);
-
             await _titleRepository.CreateAsync(entity, cancellationToken);
 
             return _mapper.Map<TitleResponse>(entity);
@@ -62,7 +61,6 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             }
 
             entity = _mapper.Map(request, entity);
-
             await _titleRepository.UpdateAsync(entity, cancellationToken);
 
             return _mapper.Map<TitleResponse>(entity);
@@ -84,7 +82,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
         public async Task<Result<IEnumerable<TitleResponse>>> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
             IEnumerable<TitleEntity> entities = await _titleRepository.GetAllByAsync(
-                s => s.Name.ToLower().Contains(name), cancellationToken);
+                s => s.Name.ToLower().Contains(name) && !s.IsDeleted, cancellationToken);
 
             IEnumerable<TitleResponse> result = _mapper.Map<IEnumerable<TitleResponse>>(entities);
 
@@ -102,7 +100,6 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             }
 
             entity.IsDeleted = true;
-
             await _titleRepository.UpdateAsync(entity, cancellationToken);
 
             return true;

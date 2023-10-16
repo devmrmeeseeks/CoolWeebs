@@ -11,6 +11,7 @@ namespace CoolWeebs.API.Database
 
         public BaseContext(DbContextOptions<BaseContext> options) : base(options)
         {
+            ChangeTracker.LazyLoadingEnabled = false;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

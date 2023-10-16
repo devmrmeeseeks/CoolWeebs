@@ -39,7 +39,6 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             }
 
             entity = _mapper.Map<ListEntity>(request);
-
             await _listRepository.CreateAsync(entity, cancellationToken);
 
             return _mapper.Map<ListResponse>(entity);
@@ -48,7 +47,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
         public async Task<Result<bool>> DeleteAsync(long id, CancellationToken cancellationToken)
         {
             ListEntity? entity = await _listRepository.GetByAsync(
-                    s => s.Id.Equals(id) && !s.IsDeleted, cancellationToken);
+                s => s.Id.Equals(id) && !s.IsDeleted, cancellationToken);
 
             if (entity is null)
             {
@@ -56,7 +55,6 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             }
 
             entity.IsDeleted = true;
-
             await _listRepository.UpdateAsync(entity, cancellationToken);
 
             return true;
@@ -65,7 +63,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
         public async Task<Result<ListResponse>> GetByIdAsync(long id, CancellationToken cancellationToken)
         {
             ListEntity? entity = await _listRepository.GetByAsync(
-                s => s.Id.Equals(id) && !s.IsDeleted, cancellationToken);
+                s =>s.Id.Equals(id) && !s.IsDeleted, cancellationToken);
 
             if (entity is null)
             {
@@ -78,7 +76,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
         public async Task<Result<IEnumerable<ListResponse>>> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
             IEnumerable<ListEntity> entities = await _listRepository.GetAllByAsync(
-                s => s.Name.ToLower().Contains(name), cancellationToken);
+                s => s.Name.ToLower().Contains(name) && !s.IsDeleted, cancellationToken);
 
             IEnumerable<ListResponse> result = _mapper.Map<IEnumerable<ListResponse>>(entities);
 
@@ -102,7 +100,6 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             }
 
             entity = _mapper.Map(request, entity);
-
             await _listRepository.UpdateAsync(entity, cancellationToken);
 
             return _mapper.Map<ListResponse>(entity);

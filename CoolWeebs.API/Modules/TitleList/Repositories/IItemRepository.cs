@@ -5,5 +5,6 @@ namespace CoolWeebs.API.Modules.TitleList.Repositories
 {
     public interface IItemRepository : IBaseRepository<ItemEntity, long>
     {
+        Task<IEnumerable<ItemEntity>> GetAllByListAsync(long listId, CancellationToken cancellationToken);
     }
 }

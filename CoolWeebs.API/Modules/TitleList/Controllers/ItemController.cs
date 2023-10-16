@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CoolWeebs.API.Modules.TitleList.Controllers
 {
     [ApiController]
-    [TrimStringProperties]
     [Route("api/[controller]")]
     public class ItemController : ControllerBase
     {
@@ -23,6 +22,20 @@ namespace CoolWeebs.API.Modules.TitleList.Controllers
         public async Task<IActionResult> Post(ItemRequest request, CancellationToken cancellationToken)
         {
             Result<ItemResponse> result = await _itemService.CreateAsync(request, cancellationToken);
+            return this.ToResponse(result);
+        }
+
+        [HttpGet("list/{listId}")]
+        public async Task<IActionResult> Get(long listId, CancellationToken cancellationToken)
+        {
+            Result<IEnumerable<ItemResponse>> result = await _itemService.GetAllByListAsync(listId, cancellationToken);
+            return this.ToResponse(result);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete([FromQuery(Name = "id")] long[] ids, CancellationToken cancellationToken)
+        {
+            Result<bool> result = await _itemService.DeleteByAsync(ids, cancellationToken);
             return this.ToResponse(result);
         }
     }

@@ -38,13 +38,13 @@ namespace CoolWeebs.API.Modules.TitleList.Services
             var listResult = await _listService.GetByIdAsync(request.ListId, cancellationToken);
             if (listResult.IsFaulted)
             {
-                return new Result<ItemResponse>(new NotFoundException("List not found"));
+                return new Result<ItemResponse>(listResult.GetException());
             }
 
             var titleResult = await _titleService.GetByIdAsync(request.TitleId, cancellationToken);
             if (titleResult.IsFaulted)
             {
-                return new Result<ItemResponse>(new NotFoundException("Title not found"));
+                return new Result<ItemResponse>(titleResult.GetException());
             }
 
             ItemEntity? entity = await _itemRepository.GetByAsync(
@@ -57,24 +57,39 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
             entity = _mapper.Map<ItemEntity>(request);
             await _itemRepository.CreateAsync(entity, cancellationToken);
-            ItemResponse result = _mapper.Map<ItemResponse>(entity);
-
-            return result with { Title = titleResult.GetValue() };
+            
+            return _mapper.Map<ItemResponse>(entity);
         }
 
-        public Task<Result<bool>> DeleteAsync(long id, CancellationToken cancellationToken)
+
+        public async Task<Result<IEnumerable<ItemResponse>>> GetAllByListAsync(long listId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            Result<ListResponse> listResult = await _listService.GetByIdAsync(listId, cancellationToken);
+            if (listResult.IsFaulted)
+            {
+                return new Result<IEnumerable<ItemResponse>>(listResult.GetException());
+            }
+
+            IEnumerable<ItemEntity> entities = await _itemRepository.GetAllByListAsync(listId, cancellationToken);
+
+            return new Result<IEnumerable<ItemResponse>>(_mapper.Map<IEnumerable<ItemResponse>>(entities));
         }
 
-        public Task<Result<ItemResponse>> GetByIdAsync(long id, CancellationToken cancellationToken)
+        public async Task<Result<bool>> DeleteByAsync(long[] items, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
+            foreach (long item in items)
+            {
+                ItemEntity? entity = await _itemRepository.GetByIdAsync(item, cancellationToken);
+                if (entity is null)
+                {
+                    continue;
+                }
 
-        public Task<Result<ItemResponse>> UpdateAsync(long id, ItemRequest request, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+                entity.IsDeleted = true;
+                _ = await _itemRepository.UpdateAsync(entity, cancellationToken);
+            }
+
+            return true;
         }
     }
 }

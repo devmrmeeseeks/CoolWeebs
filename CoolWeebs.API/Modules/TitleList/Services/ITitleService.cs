@@ -1,11 +1,14 @@
 ﻿using CoolWebs.Model.TitleLIst;
-using CoolWeebs.API.Interfaces;
 using LanguageExt.Common;
 
 namespace CoolWeebs.API.Modules.TitleList.Services
 {
-    public interface ITitleService : IBaseService<TitleResponse, TitleRequest, long>
+    public interface ITitleService
     {
+        Task<Result<TitleResponse>> CreateAsync(TitleRequest request, CancellationToken cancellationToken);
+        Task<Result<TitleResponse>> GetByIdAsync(long id, CancellationToken cancellationToken);
         Task<Result<IEnumerable<TitleResponse>>> GetByNameAsync(string name, CancellationToken cancellationToken);
+        Task<Result<TitleResponse>> UpdateAsync(long id, TitleRequest request, CancellationToken cancellationToken);
+        Task<Result<bool>> DeleteAsync(long id, CancellationToken cancellationToken);
     }
 }

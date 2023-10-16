@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolWeebs.API.Database.Migrations.DevMigration
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20231015215250_TitleList")]
+    [Migration("20231016052833_TitleList")]
     partial class TitleList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -61,10 +61,9 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TitleId");
+                    b.HasIndex("ListId");
 
-                    b.HasIndex("ListId", "TitleId")
-                        .IsUnique();
+                    b.HasIndex("TitleId");
 
                     b.HasIndex("Id", "TitleId", "ListId");
 
@@ -169,19 +168,21 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
             modelBuilder.Entity("CoolWeebs.API.Modules.TitleList.Entities.ItemEntity", b =>
                 {
-                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", null)
+                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.ListEntity", "List")
                         .WithMany()
                         .HasForeignKey("ListId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("tl_list_id");
+                        .IsRequired();
 
-                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.TitleEntity", null)
+                    b.HasOne("CoolWeebs.API.Modules.TitleList.Entities.TitleEntity", "Title")
                         .WithMany()
                         .HasForeignKey("TitleId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("tl_title_id");
+                        .IsRequired();
+
+                    b.Navigation("List");
+
+                    b.Navigation("Title");
                 });
 #pragma warning restore 612, 618
         }
