@@ -9,7 +9,6 @@ namespace CoolWeebs.API.Modules.TitleList.Validators
         {
             RuleFor(x => x.Name)
                 .NotEmpty()
-                .NotNull()
                 .MaximumLength(100);
 
             RuleFor(x => x.Description)

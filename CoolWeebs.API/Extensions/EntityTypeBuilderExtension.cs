@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CoolWeebs.API.Extensions
 {
-    public static class EntityTypeBuilderExtensions
+    public static class EntityTypeBuilderExtension
     {
         public static void ConfigureCommonProperties<T>(this EntityTypeBuilder<T> builder) where T : AuditEntity
         {

@@ -4,7 +4,7 @@ using System.Net;
 
 namespace CoolWeebs.API.Extensions
 {
-    public static class BadRequestExtension
+    public static class ValidationExceptionExtension
     {
         public static ValidationProblemDetails ToProblemDetails(this ValidationException modelState)
         {
@@ -17,7 +17,7 @@ namespace CoolWeebs.API.Extensions
 
             foreach (var error in modelState.Errors)
             {
-                validationProblemDetails.Errors.Add(error.PropertyName, new[] { error.ErrorMessage });
+                validationProblemDetails.Errors.TryAdd(error.PropertyName, new[] { error.ErrorMessage });
             }
 
             return validationProblemDetails;

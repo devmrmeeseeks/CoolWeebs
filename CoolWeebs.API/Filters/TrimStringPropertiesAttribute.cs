@@ -1,23 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
+using System.Reflection;
 
 namespace CoolWeebs.API.Filters
 {
-    public class TrimStringPropertiesAttribute : ActionFilterAttribute 
+    public class TrimStringPropertiesAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            foreach (var argument in context.ActionArguments.Values)
+            object argument = context.ActionArguments.Values.First()!;
+            foreach (PropertyInfo property in argument.GetType().GetProperties())
             {
-                foreach (var property in argument!.GetType().GetProperties())
+                if (property.PropertyType != typeof(string)) continue;
+
+                string? value = (string?)property.GetValue(argument);
+                if (value != null)
                 {
-                    if (property.PropertyType == typeof(string))
-                    {
-                        var value = (string)property.GetValue(argument)!;
-                        if (value != null)
-                        {
-                            property.SetValue(argument, value.Trim());
-                        }
-                    }
+                    property.SetValue(argument, value.Trim());
                 }
             }
 

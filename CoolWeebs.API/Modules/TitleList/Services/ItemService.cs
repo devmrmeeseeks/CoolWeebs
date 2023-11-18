@@ -57,7 +57,7 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
             entity = _mapper.Map<ItemEntity>(request);
             await _itemRepository.CreateAsync(entity, cancellationToken);
-            
+
             return _mapper.Map<ItemResponse>(entity);
         }
 

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CoolWeebs.API.Extensions
 {
-    public static class ControllerExtensions
+    public static class ControllerExtension
     {
         public static IActionResult ToResponse<TResult>(this ControllerBase controller, Result<TResult> result)
         {
