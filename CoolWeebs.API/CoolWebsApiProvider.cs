@@ -1,6 +1,7 @@
 ﻿using CoolWeebs.API.Database;
 using CoolWeebs.API.Middlewares;
 using CoolWeebs.API.Modules.TitleList.Providers;
+using CoolWeebs.API.utilities;
 
 namespace CoolWeebs.API
 {
@@ -18,6 +19,11 @@ namespace CoolWeebs.API
             services.AddTransient<GlobalExceptionMiddleware>();
 
             services.AddAutoMapper(typeof(CoolWebsApiProvider));
+
+            services.AddHttpClient<IHttpClientUtility, HttpClientUtility>((provider, client) =>
+            {
+                client.BaseAddress = new Uri(configuration["HttpClientSettings:JikanUrl"]);
+            });
 
             return services;
         }

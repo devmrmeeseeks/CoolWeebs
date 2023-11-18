@@ -19,7 +19,6 @@
   <ItemGroup>
     <Folder Include="Modules\Authorization\" />
     <Folder Include="Modules\Notification\" />
-    <Folder Include="utilities\" />
   </ItemGroup>
 
   <ItemGroup>
