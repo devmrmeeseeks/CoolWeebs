@@ -1,5 +1,5 @@
 ﻿using System.Linq.Expressions;
-using CoolWeebs.API.Entities;
+using CoolWeebs.API.Database.Entity;
 
 namespace CoolWeebs.API.Database.Repository
 {

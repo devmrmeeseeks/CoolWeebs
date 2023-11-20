@@ -4,7 +4,7 @@
         DateTime CreatedAt, DateTime UpdatedAt)
     {
         public ItemResponse(long id, bool isCompleted, DateTime createdAt, DateTime updatedAt)
-            : this(id, isCompleted, null, createdAt, updatedAt)
+            : this(id, isCompleted, null!, createdAt, updatedAt)
         {
         }
     }

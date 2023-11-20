@@ -1,4 +1,4 @@
-﻿using CoolWeebs.API.Entities;
+﻿using CoolWeebs.API.Database.Entity;
 
 namespace CoolWeebs.API.Modules.TitleList.Entities
 {
