@@ -91,15 +91,11 @@ namespace CoolWeebs.API.Modules.TitleList.Services
                 return new Result<IEnumerable<TitleResponse>>(new NotFoundException("Title not found"));
             }
 
-            string searchKeyword = name.Split(' ')[0];
-            IEnumerable<TitleEntity> entities = await _titleRepository.GetAllByAsync(
-                s => s.Name.ToLower().Contains(searchKeyword) && !s.IsDeleted, cancellationToken);
-
             IEnumerable<TitleResponse> result;
-            IEnumerable<TitleExternalData> transientTitles = response.Where(s => !entities.Any(e => e.Name.Equals(s.Title)));
-            foreach(var item in transientTitles) {
-                Console.WriteLine(item.Title);
-            }
+            HashSet<string> responseHashSet = new HashSet<string>(response.Select(r => r.Title));
+            IEnumerable<TitleEntity> entities = await _titleRepository.GetAllByAsync(s => responseHashSet.Any(r => r.Equals(s.Name)), cancellationToken);
+            IEnumerable<TitleExternalData> transientTitles = response.Except(entities.Select(e => new TitleExternalData(e.Name)),
+                EqualityComparer<TitleExternalData>.Default);
 
             if (transientTitles.Length() > 0) {
                 IEnumerable<TitleEntity> titles = _mapper.Map<IEnumerable<TitleEntity>>(transientTitles);
