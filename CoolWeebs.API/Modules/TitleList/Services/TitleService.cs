@@ -2,7 +2,9 @@
 using CoolWebs.Model.TitleLIst;
 using CoolWeebs.API.Exceptions;
 using CoolWeebs.API.Modules.TitleList.Entities;
+using CoolWeebs.API.Modules.TitleList.Models;
 using CoolWeebs.API.Modules.TitleList.Repositories;
+using CoolWeebs.API.utilities;
 using FluentValidation;
 using FluentValidation.Results;
 using LanguageExt.Common;
@@ -13,12 +15,14 @@ namespace CoolWeebs.API.Modules.TitleList.Services
     {
         private readonly ITitleRepository _titleRepository;
         private readonly IValidator<TitleRequest> _validator;
+        private readonly IHttpClientUtility _httpClientUtility;
         private readonly IMapper _mapper;
 
         public TitleService(IServiceProvider provider)
         {
             _titleRepository = provider.GetRequiredService<ITitleRepository>();
             _validator = provider.GetRequiredService<IValidator<TitleRequest>>();
+            _httpClientUtility = provider.GetRequiredService<IHttpClientUtility>();
             _mapper = provider.GetRequiredService<IMapper>();
         }
 
@@ -81,10 +85,29 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
         public async Task<Result<IEnumerable<TitleResponse>>> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
-            IEnumerable<TitleEntity> entities = await _titleRepository.GetAllByAsync(
-                s => s.Name.ToLower().Contains(name) && !s.IsDeleted, cancellationToken);
+            IEnumerable<TitleExternalData> response = await GetExternalTitlesAsync(new { q = name, page = 1 }, cancellationToken);
 
-            IEnumerable<TitleResponse> result = _mapper.Map<IEnumerable<TitleResponse>>(entities);
+            if (!response.Any()) {
+                return new Result<IEnumerable<TitleResponse>>(new NotFoundException("Title not found"));
+            }
+
+            string searchKeyword = name.Split(' ')[0];
+            IEnumerable<TitleEntity> entities = await _titleRepository.GetAllByAsync(
+                s => s.Name.ToLower().Contains(searchKeyword) && !s.IsDeleted, cancellationToken);
+
+            IEnumerable<TitleResponse> result;
+            IEnumerable<TitleExternalData> transientTitles = response.Where(s => !entities.Any(e => e.Name.Equals(s.Title)));
+            foreach(var item in transientTitles) {
+                Console.WriteLine(item.Title);
+            }
+
+            if (transientTitles.Length() > 0) {
+                IEnumerable<TitleEntity> titles = _mapper.Map<IEnumerable<TitleEntity>>(transientTitles);
+                await _titleRepository.CreateRangeAsync(titles, cancellationToken);
+                result = _mapper.Map<IEnumerable<TitleResponse>>(titles);
+            } else {
+                result = _mapper.Map<IEnumerable<TitleResponse>>(entities);
+            }
 
             return new Result<IEnumerable<TitleResponse>>(result);
         }
@@ -104,5 +127,21 @@ namespace CoolWeebs.API.Modules.TitleList.Services
 
             return true;
         }
+
+        #region Private Methods
+        private async Task<IEnumerable<TitleExternalData>> GetExternalTitlesAsync(dynamic filter, CancellationToken cancellationToken = default)
+        {
+            ExternalTitleResponse? response = await _httpClientUtility.GetAsync<ExternalTitleResponse>(filter, cancellationToken);
+            if (response is null) return Enumerable.Empty<TitleExternalData>();
+            if (!response.Pagination.HasNextPage) return response.Data;
+            IEnumerable<TitleExternalData> titles = await GetExternalTitlesAsync(new {
+                q = filter.q,
+                page = filter.page + 1
+            }, cancellationToken);
+
+            return response.Data.Concat(titles);
+
+        }
+        #endregion
     }
 }

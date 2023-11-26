@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolWeebs.API.Database.Migrations.DevMigration
 {
     [DbContext(typeof(BaseContext))]
-    [Migration("20231016052833_TitleList")]
+    [Migration("20231123041901_TitleList")]
     partial class TitleList
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -143,8 +143,8 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -153,8 +153,8 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasColumnName("updated_at");
 
                     b.Property<string>("UrlThumbnail")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("url_thumbnail");
 
                     b.HasKey("Id");

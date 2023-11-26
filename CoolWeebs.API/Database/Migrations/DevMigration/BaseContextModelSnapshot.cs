@@ -141,8 +141,8 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -151,8 +151,8 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasColumnName("updated_at");
 
                     b.Property<string>("UrlThumbnail")
-                        .HasMaxLength(200)
-                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)")
                         .HasColumnName("url_thumbnail");
 
                     b.HasKey("Id");

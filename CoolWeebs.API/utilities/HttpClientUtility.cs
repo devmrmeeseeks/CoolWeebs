@@ -1,4 +1,8 @@
-﻿namespace CoolWeebs.API.utilities
+﻿using System.Reflection;
+using System.Text;
+using System.Web;
+
+namespace CoolWeebs.API.utilities
 {
     public class HttpClientUtility : IHttpClientUtility
     {
@@ -10,15 +14,32 @@
         }
 
 
-        public async Task<T?> GetAsync<T>(string uri)
+        public async Task<T?> GetAsync<T>(object uriObj, CancellationToken cancellationToken = default)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync(uri);
+            string uri = GetUriFromObject(uriObj);
+            HttpResponseMessage response = await _httpClient.GetAsync(uri, cancellationToken);
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadFromJsonAsync<T>();
             }
 
             return default;
+        }
+
+        private String GetUriFromObject(object obj)
+        {
+            StringBuilder uriBuilder = new StringBuilder();
+            uriBuilder.Append("?");
+            foreach (PropertyInfo property in obj.GetType().GetProperties())
+            {
+                string name = property.Name;
+                object? value = property.GetValue(obj, null);
+                if (value is null) continue;
+
+                uriBuilder.Append($"{name}={HttpUtility.UrlEncode(value.ToString())}&");
+            }
+
+            return uriBuilder.ToString();
         }
     }
 }

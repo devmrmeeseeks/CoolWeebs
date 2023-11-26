@@ -2,6 +2,6 @@
 {
     public interface IHttpClientUtility
     {
-        Task<T?> GetAsync<T>(string uri);
+        Task<T?> GetAsync<T>(object uriObj, CancellationToken cancellationToken = default);
     }
 }

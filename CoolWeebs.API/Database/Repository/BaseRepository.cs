@@ -20,6 +20,13 @@ namespace CoolWeebs.API.Database.Repository
             return transientEntity;
         }
 
+        public async Task<IEnumerable<E>> CreateRangeAsync(IEnumerable<E> transientEntities, CancellationToken cancellationToken)
+        {
+            await _context.Set<E>().AddRangeAsync(transientEntities, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
+            return transientEntities;
+        }
+
         public async Task<IEnumerable<E>> GetAllByAsync(Expression<Func<E, bool>> predicate, CancellationToken cancellationToken)
             => await _context.Set<E>().Where(predicate).ToListAsync(cancellationToken);
 
