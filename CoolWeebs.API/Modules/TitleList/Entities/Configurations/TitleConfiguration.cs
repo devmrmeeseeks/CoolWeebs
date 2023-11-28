@@ -25,8 +25,14 @@ namespace CoolWeebs.API.Modules.TitleList.Entities.Configurations
                 .HasColumnName("url_thumbnail")
                 .HasMaxLength(255);
 
-            builder.Property(e => e.Description)
-                .HasColumnName("description");
+            builder.Property(e => e.Synopsis)
+                .HasColumnName("synopsis");
+
+            builder.Property(e => e.Episodes)
+                .HasColumnName("episodes");
+
+            builder.Property(e => e.Year)
+                .HasColumnName("year");
 
             builder.HasIndex(e => new { e.Id, e.Name });
 

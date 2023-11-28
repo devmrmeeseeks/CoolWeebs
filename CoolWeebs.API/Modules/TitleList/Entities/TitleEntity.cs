@@ -10,6 +10,10 @@ namespace CoolWeebs.API.Modules.TitleList.Entities
 
         public string? UrlThumbnail { get; set; }
 
-        public string? Description { get; set; }
+        public string? Synopsis { get; set; }
+
+        public short? Episodes { get; set; }
+
+        public short? Year { get; set; }
     }
 }

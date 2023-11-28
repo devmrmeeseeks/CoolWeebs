@@ -129,9 +129,9 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("longtext")
-                        .HasColumnName("description");
+                    b.Property<short?>("Episodes")
+                        .HasColumnType("smallint")
+                        .HasColumnName("episodes");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -145,6 +145,10 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasColumnType("varchar(255)")
                         .HasColumnName("name");
 
+                    b.Property<string>("Synopsis")
+                        .HasColumnType("longtext")
+                        .HasColumnName("synopsis");
+
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime(6)")
@@ -154,6 +158,10 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)")
                         .HasColumnName("url_thumbnail");
+
+                    b.Property<short?>("Year")
+                        .HasColumnType("smallint")
+                        .HasColumnName("year");
 
                     b.HasKey("Id");
 

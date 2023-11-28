@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using CoolWebs.Model.TitleLIst;
 using CoolWeebs.API.Modules.TitleList.Entities;
-using CoolWeebs.API.Modules.TitleList.Models;
+using CoolWeebs.API.Modules.TitleList.ExternalContracts;
 
 namespace CoolWeebs.API.Modules.TitleList.Mappers
 {

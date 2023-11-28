@@ -1,4 +1,5 @@
 ﻿using CoolWeebs.API.Database.Entity;
+using LanguageExt;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -20,11 +21,13 @@ namespace CoolWeebs.API.Database.Repository
             return transientEntity;
         }
 
-        public async Task<IEnumerable<E>> CreateRangeAsync(IEnumerable<E> transientEntities, CancellationToken cancellationToken = default)
+        public async Task CreateBulk(IEnumerable<E> transientEntities, Expression<Func<E, object>> columnExpression,
+            CancellationToken cancellationToken = default)
         {
-            await _context.Set<E>().AddRangeAsync(transientEntities, cancellationToken);
-            await _context.SaveChangesAsync(cancellationToken);
-            return transientEntities;
+            await _context.Set<E>().BulkInsertAsync(transientEntities, options => {
+                options.InsertIfNotExists = true;
+                options.ColumnPrimaryKeyExpression = columnExpression;
+            } ,cancellationToken);
         }
 
         public async Task<IEnumerable<E>> GetAllByAsync(Expression<Func<E, bool>> predicate, CancellationToken cancellationToken = default)

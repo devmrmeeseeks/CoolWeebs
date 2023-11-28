@@ -6,7 +6,8 @@ namespace CoolWeebs.API.Database.Repository
     public interface IBaseRepository<E, T> where E : IEntity<T>
     {
         Task<E> CreateAsync(E transientEntity, CancellationToken cancellationToken = default);
-        Task<IEnumerable<E>> CreateRangeAsync(IEnumerable<E> transientEntities, CancellationToken cancellationToken = default);
+        Task CreateBulk(IEnumerable<E> transientEntities, Expression<Func<E, object>> columnExpression,
+            CancellationToken cancellationToken = default);
         Task<IEnumerable<E>> GetAllByAsync(Expression<Func<E, bool>> predicate, CancellationToken cancellationToken = default);
         Task<IEnumerable<E>> GetAllAsync(CancellationToken cancellationToken = default);
         Task<E?> GetByAsync(Expression<Func<E, bool>> predicate, CancellationToken cancellationToken = default);

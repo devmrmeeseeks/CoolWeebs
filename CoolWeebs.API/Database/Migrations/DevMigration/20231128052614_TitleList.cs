@@ -47,8 +47,10 @@ namespace CoolWeebs.API.Database.Migrations.DevMigration
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     url_thumbnail = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    description = table.Column<string>(type: "longtext", nullable: true)
+                    synopsis = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    episodes = table.Column<short>(type: "smallint", nullable: true),
+                    year = table.Column<short>(type: "smallint", nullable: true),
                     created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)

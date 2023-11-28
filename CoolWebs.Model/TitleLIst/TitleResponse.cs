@@ -8,7 +8,11 @@
 
         string? UrlThumbnail,
 
-        string? Description,
+        string? Synopsis,
+
+        short? Episodes,
+
+        short? Year,
 
         DateTime CreatedAt,
 

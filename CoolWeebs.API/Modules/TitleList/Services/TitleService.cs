@@ -2,7 +2,7 @@
 using CoolWebs.Model.TitleLIst;
 using CoolWeebs.API.Exceptions;
 using CoolWeebs.API.Modules.TitleList.Entities;
-using CoolWeebs.API.Modules.TitleList.Models;
+using CoolWeebs.API.Modules.TitleList.ExternalContracts;
 using CoolWeebs.API.Modules.TitleList.Repositories;
 using CoolWeebs.API.utilities;
 using FluentValidation;
@@ -86,24 +86,13 @@ namespace CoolWeebs.API.Modules.TitleList.Services
         public async Task<Result<IEnumerable<TitleResponse>>> GetByNameAsync(string name, CancellationToken cancellationToken)
         {
             IEnumerable<TitleExternalData> response = await GetExternalTitlesAsync(new { q = name, page = 1 }, cancellationToken);
-
             if (!response.Any()) {
                 return new Result<IEnumerable<TitleResponse>>(new NotFoundException("Title not found"));
             }
 
-            IEnumerable<TitleResponse> result;
-            HashSet<string> responseHashSet = new HashSet<string>(response.Select(r => r.Title));
-            IEnumerable<TitleEntity> entities = await _titleRepository.GetAllByAsync(s => responseHashSet.Any(r => r.Equals(s.Name)), cancellationToken);
-            IEnumerable<TitleExternalData> transientTitles = response.Except(entities.Select(e => new TitleExternalData(e.Name)),
-                EqualityComparer<TitleExternalData>.Default);
-
-            if (transientTitles.Length() > 0) {
-                IEnumerable<TitleEntity> titles = _mapper.Map<IEnumerable<TitleEntity>>(transientTitles);
-                await _titleRepository.CreateRangeAsync(titles, cancellationToken);
-                result = _mapper.Map<IEnumerable<TitleResponse>>(titles);
-            } else {
-                result = _mapper.Map<IEnumerable<TitleResponse>>(entities);
-            }
+            IEnumerable<TitleEntity> entities = _mapper.Map<IEnumerable<TitleEntity>>(response);
+            await _titleRepository.CreateBulk(entities, entities => entities.Name, cancellationToken);
+            IEnumerable<TitleResponse> result = _mapper.Map<IEnumerable<TitleResponse>>(entities);
 
             return new Result<IEnumerable<TitleResponse>>(result);
         }
